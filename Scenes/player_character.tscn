@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://ceklkriidetef"]
+
+[ext_resource type="Script" uid="uid://rwypgokq32i1" path="res://Scripts/player_character.gd" id="1_qcwfp"]
+[ext_resource type="Script" uid="uid://ci5o5tmbvllq2" path="res://Scripts/StateMachine.gd" id="2_cmdk4"]
+[ext_resource type="Script" uid="uid://cr5appi5jhho4" path="res://Scripts/PlayerStates/movement.gd" id="3_o0f8b"]
+[ext_resource type="Script" uid="uid://r6kv304tv2fo" path="res://Scripts/PlayerStates/idle.gd" id="3_wko77"]
+[ext_resource type="Script" uid="uid://bu017uqxqo3fq" path="res://Scripts/PlayerStates/jump.gd" id="5_pb3n0"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oigcr"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qcwfp"]
+
+[node name="PlayerCharacter" type="CharacterBody3D"]
+script = ExtResource("1_qcwfp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_oigcr")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5602074, -0.21764392)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_qcwfp")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "state_label")]
+script = ExtResource("2_cmdk4")
+initial_state = NodePath("Idle")
+state_label = NodePath("../CanvasLayer/Hud/State")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_wko77")
+
+[node name="Movement" type="Node" parent="StateMachine"]
+script = ExtResource("3_o0f8b")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("5_pb3n0")
+
+[node name="Attacking" type="Node" parent="StateMachine"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Hud" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="State" type="Label" parent="CanvasLayer/Hud"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "State"

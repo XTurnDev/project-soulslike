@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bah8wp4npraq6"]
+
+[ext_resource type="Texture2D" uid="uid://dtrnl4bnvne8c" path="res://Assets/Textures/Debug/Grid/gray grid.png" id="1_skmq4"]
+[ext_resource type="PackedScene" uid="uid://ceklkriidetef" path="res://Scenes/player_character.tscn" id="2_au00k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bi5fs"]
+albedo_texture = ExtResource("1_skmq4")
+uv1_triplanar = true
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_okq71"]
+data = PackedVector3Array(-12.5, -0.05, 12.5, -12.5, -0.05, -12.5, -12.5, 0.05, -12.5, 12.5, -0.05, -12.5, -12.5, -0.05, -12.5, -12.5, -0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, -12.5, 12.5, -0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, 12.5, -12.5, -0.05, 12.5, -12.5, -0.05, 12.5, -12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, -12.5, 0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, 12.5, 12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, 12.5, 12.5, -0.05, 12.5, -12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, -0.05, 12.5, 12.5, 0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, -12.5, 12.5, 0.05, -12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, -12.5, 12.5, -0.05, -12.5)
+
+[node name="TestWorld" type="Node3D"]
+
+[node name="Models" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Models"]
+size = Vector3(25, 0.1, 25)
+material = SubResource("StandardMaterial3D_bi5fs")
+
+[node name="PlayerCharacter" parent="." instance=ExtResource("2_au00k")]
+
+[node name="Collisions" type="StaticBody3D" parent="."]
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Collisions"]
+shape = SubResource("ConcavePolygonShape3D_okq71")
