@@ -16,6 +16,7 @@ func _ready() -> void:
 	if initial_state:
 		initial_state.Enter()
 		current_state = initial_state
+		state_label.text = current_state.name
 
 func _process(delta: float) -> void:
 	if current_state:

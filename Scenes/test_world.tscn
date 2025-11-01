@@ -1,7 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://bah8wp4npraq6"]
+[gd_scene load_steps=8 format=3 uid="uid://bah8wp4npraq6"]
 
 [ext_resource type="Texture2D" uid="uid://dtrnl4bnvne8c" path="res://Assets/Textures/Debug/Grid/gray grid.png" id="1_skmq4"]
 [ext_resource type="PackedScene" uid="uid://ceklkriidetef" path="res://Scenes/player_character.tscn" id="2_au00k"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_au00k"]
+sky_horizon_color = Color(0.8579024, 0.8983153, 1.0034194, 1)
+ground_bottom_color = Color(0.28571323, 0.3783649, 0.70278096, 1)
+ground_horizon_color = Color(0.8579024, 0.8983153, 1.0034194, 1)
+
+[sub_resource type="Sky" id="Sky_707cn"]
+sky_material = SubResource("ProceduralSkyMaterial_au00k")
+
+[sub_resource type="Environment" id="Environment_mq1bj"]
+background_mode = 2
+sky = SubResource("Sky_707cn")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bi5fs"]
 albedo_texture = ExtResource("1_skmq4")
@@ -11,6 +25,13 @@ uv1_triplanar = true
 data = PackedVector3Array(-12.5, -0.05, 12.5, -12.5, -0.05, -12.5, -12.5, 0.05, -12.5, 12.5, -0.05, -12.5, -12.5, -0.05, -12.5, -12.5, -0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, -12.5, 12.5, -0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, 12.5, -12.5, -0.05, 12.5, -12.5, -0.05, 12.5, -12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, -12.5, 0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, 12.5, 12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, 12.5, 12.5, -0.05, 12.5, -12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, -0.05, 12.5, 12.5, 0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, -12.5, 12.5, 0.05, -12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, -12.5, 12.5, -0.05, -12.5)
 
 [node name="TestWorld" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mq1bj")
 
 [node name="Models" type="Node3D" parent="."]
 

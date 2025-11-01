@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ceklkriidetef"]
+[gd_scene load_steps=9 format=3 uid="uid://ceklkriidetef"]
 
 [ext_resource type="Script" uid="uid://rwypgokq32i1" path="res://Scripts/player_character.gd" id="1_qcwfp"]
 [ext_resource type="Script" uid="uid://ci5o5tmbvllq2" path="res://Scripts/StateMachine.gd" id="2_cmdk4"]
@@ -10,15 +10,14 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qcwfp"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_pb3n0"]
+
 [node name="PlayerCharacter" type="CharacterBody3D"]
 script = ExtResource("1_qcwfp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_oigcr")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5602074, -0.21764392)
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -49,9 +48,24 @@ offset_right = 1152.0
 offset_bottom = 648.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="State" type="Label" parent="CanvasLayer/Hud"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "State"
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4943959, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="Hitboxes" type="Node3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5602074, 0.21764392)
+
+[node name="Area3D" type="Area3D" parent="Head/Camera3D/Hitboxes"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera3D/Hitboxes/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4275764, -0.9426786)
+shape = SubResource("BoxShape3D_pb3n0")
