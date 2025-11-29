@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ceklkriidetef"]
+[gd_scene load_steps=10 format=3 uid="uid://ceklkriidetef"]
 
 [ext_resource type="Script" uid="uid://rwypgokq32i1" path="res://Scripts/player_character.gd" id="1_qcwfp"]
-[ext_resource type="Script" uid="uid://ci5o5tmbvllq2" path="res://Scripts/StateMachine.gd" id="2_cmdk4"]
+[ext_resource type="Script" uid="uid://ci5o5tmbvllq2" path="res://Scripts/PlayerStates/StateMachine.gd" id="2_cmdk4"]
 [ext_resource type="Script" uid="uid://cr5appi5jhho4" path="res://Scripts/PlayerStates/movement.gd" id="3_o0f8b"]
 [ext_resource type="Script" uid="uid://r6kv304tv2fo" path="res://Scripts/PlayerStates/idle.gd" id="3_wko77"]
 [ext_resource type="Script" uid="uid://bu017uqxqo3fq" path="res://Scripts/PlayerStates/jump.gd" id="5_pb3n0"]
+[ext_resource type="PackedScene" uid="uid://bp7cwrk7tmlbu" path="res://Assets/Models/right_arm.blend" id="6_ons1q"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oigcr"]
 
@@ -43,18 +44,36 @@ script = ExtResource("5_pb3n0")
 
 [node name="Hud" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="State" type="Label" parent="CanvasLayer/Hud"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "State"
+
+[node name="Interactable" type="Label" parent="CanvasLayer/Hud"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -11.5
+offset_right = 77.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press \"E\" to interact"
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4943959, 0)
@@ -69,3 +88,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5602074, 0.21764392)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera3D/Hitboxes/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4275764, -0.9426786)
 shape = SubResource("BoxShape3D_pb3n0")
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -3)
+
+[node name="right_arm" parent="Head/Camera3D" instance=ExtResource("6_ons1q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32603765, -2, 2.15912)
+
+[node name="WeaponHoldPoint" type="Node3D" parent="Head/Camera3D/right_arm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4407693, 1.613349, -3.2809014)
