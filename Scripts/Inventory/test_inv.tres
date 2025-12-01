@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="InventoryData" load_steps=10 format=3 uid="uid://be0eco16rlgp1"]
+
+[ext_resource type="Script" uid="uid://dt077o02q38y8" path="res://Scripts/Inventory/InventoryData.gd" id="1_d006j"]
+[ext_resource type="Script" uid="uid://c2cqaodupuysi" path="res://Scripts/Inventory/SlotData.gd" id="2_3cv20"]
+[ext_resource type="Resource" uid="uid://bpobbt4lq3xv7" path="res://Scripts/Weapons/short_sword.tres" id="3_p2w6j"]
+[ext_resource type="Resource" uid="uid://ncv47c1dor0n" path="res://Scripts/Weapons/wood_axe.tres" id="4_t00ym"]
+[ext_resource type="Resource" uid="uid://c82xu0mfsudwr" path="res://Scripts/Items/apple.tres" id="5_t00ym"]
+
+[sub_resource type="Resource" id="Resource_n38w8"]
+script = ExtResource("2_3cv20")
+item_data = ExtResource("3_p2w6j")
+metadata/_custom_type_script = "uid://c2cqaodupuysi"
+
+[sub_resource type="Resource" id="Resource_dv8io"]
+script = ExtResource("2_3cv20")
+item_data = ExtResource("4_t00ym")
+metadata/_custom_type_script = "uid://c2cqaodupuysi"
+
+[sub_resource type="Resource" id="Resource_hoyqr"]
+script = ExtResource("2_3cv20")
+item_data = ExtResource("5_t00ym")
+quantity = 11
+metadata/_custom_type_script = "uid://c2cqaodupuysi"
+
+[sub_resource type="Resource" id="Resource_t00ym"]
+script = ExtResource("2_3cv20")
+item_data = ExtResource("5_t00ym")
+quantity = 11
+metadata/_custom_type_script = "uid://c2cqaodupuysi"
+
+[resource]
+script = ExtResource("1_d006j")
+slot_datas = Array[ExtResource("2_3cv20")]([null, null, SubResource("Resource_n38w8"), null, null, null, SubResource("Resource_dv8io"), null, null, null, SubResource("Resource_hoyqr"), SubResource("Resource_t00ym"), null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://dt077o02q38y8"

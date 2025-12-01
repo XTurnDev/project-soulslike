@@ -1,9 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://bah8wp4npraq6"]
+[gd_scene load_steps=14 format=3 uid="uid://bah8wp4npraq6"]
 
+[ext_resource type="Script" uid="uid://ehuvvhm1bjhc" path="res://Scenes/main.gd" id="1_kt01x"]
 [ext_resource type="Texture2D" uid="uid://dtrnl4bnvne8c" path="res://Assets/Textures/Debug/Grid/gray grid.png" id="1_skmq4"]
 [ext_resource type="PackedScene" uid="uid://ceklkriidetef" path="res://Scenes/player_character.tscn" id="2_au00k"]
 [ext_resource type="PackedScene" uid="uid://b2btdm8cq2xlq" path="res://Scenes/npc_base.tscn" id="3_707cn"]
 [ext_resource type="PackedScene" uid="uid://bmkgif8bwh0x" path="res://Assets/Models/Environment/pine_tree.blend" id="4_mq1bj"]
+[ext_resource type="PackedScene" uid="uid://df7f2aqjf50n" path="res://Scripts/Inventory/inventory.tscn" id="5_iwv7r"]
+[ext_resource type="Script" uid="uid://bdxsy1ue1h7ok" path="res://Scripts/Inventory/inventory_interface.gd" id="6_p7j4p"]
+[ext_resource type="PackedScene" uid="uid://wef67j5gv5kw" path="res://Scripts/Inventory/slot.tscn" id="8_0fcji"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_au00k"]
 sky_horizon_color = Color(0.8579024, 0.8983153, 1.0034194, 1)
@@ -27,6 +31,7 @@ uv1_triplanar = true
 data = PackedVector3Array(-12.5, -0.05, 12.5, -12.5, -0.05, -12.5, -12.5, 0.05, -12.5, 12.5, -0.05, -12.5, -12.5, -0.05, -12.5, -12.5, -0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, -12.5, 12.5, -0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, 12.5, -12.5, -0.05, 12.5, -12.5, -0.05, 12.5, -12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, -12.5, 0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, 12.5, 12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, 12.5, 12.5, -0.05, 12.5, -12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, -0.05, 12.5, 12.5, 0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, -12.5, 12.5, 0.05, -12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, -12.5, 12.5, -0.05, -12.5)
 
 [node name="TestWorld" type="Node3D"]
+script = ExtResource("1_kt01x")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
@@ -53,3 +58,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -2)
 
 [node name="pine_tree" parent="." instance=ExtResource("4_mq1bj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1589851, 0.049999952, -6.4420204)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InventoryInterface" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("6_p7j4p")
+
+[node name="Inventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
+layout_mode = 0
+
+[node name="GrabbedSlot" parent="CanvasLayer/InventoryInterface" instance=ExtResource("8_0fcji")]
+visible = false
+layout_mode = 0

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://bpobbt4lq3xv7"]
+
+[ext_resource type="PackedScene" uid="uid://bpq0w16q2ba72" path="res://Assets/Models/Items/Weapons/Basic Short Sword.blend" id="1_72hj3"]
+[ext_resource type="Script" uid="uid://cqlpovtiw2t70" path="res://Scripts/Weapons/WeaponData.gd" id="2_72hj3"]
+
+[resource]
+script = ExtResource("2_72hj3")
+mesh = ExtResource("1_72hj3")
+weapon_type = "short_sword"
+damage = 50
+attack_speed = 5.0
+name = "Short Sword"
+item_type = "Weapon"
+metadata/_custom_type_script = "uid://cqlpovtiw2t70"

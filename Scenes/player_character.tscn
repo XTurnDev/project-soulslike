@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://ceklkriidetef"]
+[gd_scene load_steps=11 format=3 uid="uid://ceklkriidetef"]
 
 [ext_resource type="Script" uid="uid://rwypgokq32i1" path="res://Scripts/player_character.gd" id="1_qcwfp"]
+[ext_resource type="Resource" uid="uid://be0eco16rlgp1" path="res://Scripts/Inventory/test_inv.tres" id="2_ajo0r"]
 [ext_resource type="Script" uid="uid://ci5o5tmbvllq2" path="res://Scripts/PlayerStates/StateMachine.gd" id="2_cmdk4"]
 [ext_resource type="Script" uid="uid://cr5appi5jhho4" path="res://Scripts/PlayerStates/movement.gd" id="3_o0f8b"]
 [ext_resource type="Script" uid="uid://r6kv304tv2fo" path="res://Scripts/PlayerStates/idle.gd" id="3_wko77"]
@@ -15,6 +16,7 @@
 
 [node name="PlayerCharacter" type="CharacterBody3D"]
 script = ExtResource("1_qcwfp")
+inventory_data = ExtResource("2_ajo0r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
