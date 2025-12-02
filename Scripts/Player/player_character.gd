@@ -4,8 +4,9 @@ signal toggle_menu
 
 
 @export var inventory_data: InventoryData
+@export var equip_inventory_data: InventoryDataEquip
 
-const sensitivity = 0.01
+const sensitivity = 0.001
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 
@@ -16,10 +17,12 @@ const sensitivity = 0.01
 @onready var hitbox_col_shape = $Head/Camera3D/Hitboxes/Area3D/CollisionShape3D
 @onready var hitbox_area = $Head/Camera3D/Hitboxes/Area3D
 
-const SHORT_SWORD = preload("uid://bpobbt4lq3xv7")
-const WOOD_AXE = preload("uid://ncv47c1dor0n")
+var health: int = 100
+
+var interactable: bool = false
 
 func _ready():
+	PlayerManager.player = self
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
@@ -27,8 +30,11 @@ func _unhandled_input(event):
 		rotate_y(-event.relative.x * sensitivity)
 		camera.rotate_x(-event.relative.y * sensitivity)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-60), deg_to_rad(60))
+	
 	if Input.is_action_just_pressed("action_interaction"):
-		equip_weapon(SHORT_SWORD)
+		if interactable:
+			if raycast.get_collider().has_method("player_interact"):
+				raycast.get_collider().player_interact()
 	
 	if Input.is_action_just_pressed("action_escape"):
 		toggle_menu.emit()
@@ -43,8 +49,10 @@ func _physics_process(delta: float) -> void:
 		if not target.is_in_group("Interactable"):
 			return
 		else:
+			interactable = true
 			interactable_label.show()
 	else:
+		interactable = false
 		interactable_label.hide()
 
 func equip_weapon(data: WeaponData):
@@ -66,3 +74,10 @@ func equip_weapon(data: WeaponData):
 	hitbox_col_shape.position = data.hitbox_offset
 	
 	print(data.name + " kuşandı. Hitbox boyutu güncellendi: " + str(data.hitbox_size))
+
+func get_drop_position() -> Vector3:
+	var direction = -camera.global_transform.basis.z
+	return camera.global_position + direction
+
+func heal(heal_value: int) -> void:
+	health += heal_value

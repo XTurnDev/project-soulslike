@@ -1,0 +1,2 @@
+extends EquipData
+class_name ArmorData

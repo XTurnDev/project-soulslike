@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://ncv47c1dor0n"]
 
 [ext_resource type="PackedScene" uid="uid://b1wr35ri455ei" path="res://Assets/Models/Items/Weapons/wood axe.blend" id="1_v73af"]
-[ext_resource type="Script" uid="uid://cqlpovtiw2t70" path="res://Scripts/Weapons/WeaponData.gd" id="2_v73af"]
+[ext_resource type="Script" uid="uid://cqlpovtiw2t70" path="res://Scripts/ItemDatas/WeaponData.gd" id="2_v73af"]
 
 [resource]
 script = ExtResource("2_v73af")

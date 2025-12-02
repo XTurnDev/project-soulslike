@@ -15,6 +15,10 @@ run/main_scene="uid://bah8wp4npraq6"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PlayerManager="*res://Scripts/Player/player_manager.gd"
+
 [display]
 
 window/size/viewport_width=1280
@@ -27,6 +31,10 @@ window/stretch/mode="viewport"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/script-ide/plugin.cfg")
+
+[global_group]
+
+Interactable=""
 
 [input]
 

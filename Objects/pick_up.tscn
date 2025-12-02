@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://cq3vuh1t3v45b"]
+
+[ext_resource type="Script" uid="uid://b2v56c42ofbuu" path="res://Scripts/Objects/pick_up.gd" id="1_lxp1s"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_u2exo"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u2exo"]
+radius = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lxp1s"]
+radius = 0.3
+
+[node name="PickUp" type="RigidBody3D"]
+collision_layer = 0
+lock_rotation = true
+script = ExtResource("1_lxp1s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_u2exo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_u2exo")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" groups=["PickUp"]]
+shape = SubResource("SphereShape3D_lxp1s")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

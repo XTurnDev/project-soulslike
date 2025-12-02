@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://ceklkriidetef"]
 
-[ext_resource type="Script" uid="uid://rwypgokq32i1" path="res://Scripts/player_character.gd" id="1_qcwfp"]
+[ext_resource type="Script" uid="uid://rwypgokq32i1" path="res://Scripts/Player/player_character.gd" id="1_qcwfp"]
 [ext_resource type="Resource" uid="uid://be0eco16rlgp1" path="res://Scripts/Inventory/test_inv.tres" id="2_ajo0r"]
-[ext_resource type="Script" uid="uid://ci5o5tmbvllq2" path="res://Scripts/PlayerStates/StateMachine.gd" id="2_cmdk4"]
-[ext_resource type="Script" uid="uid://cr5appi5jhho4" path="res://Scripts/PlayerStates/movement.gd" id="3_o0f8b"]
-[ext_resource type="Script" uid="uid://r6kv304tv2fo" path="res://Scripts/PlayerStates/idle.gd" id="3_wko77"]
-[ext_resource type="Script" uid="uid://bu017uqxqo3fq" path="res://Scripts/PlayerStates/jump.gd" id="5_pb3n0"]
+[ext_resource type="Script" uid="uid://ci5o5tmbvllq2" path="res://Scripts/Player/PlayerStates/StateMachine.gd" id="2_cmdk4"]
+[ext_resource type="Script" uid="uid://cr5appi5jhho4" path="res://Scripts/Player/PlayerStates/movement.gd" id="3_o0f8b"]
+[ext_resource type="Script" uid="uid://r6kv304tv2fo" path="res://Scripts/Player/PlayerStates/idle.gd" id="3_wko77"]
+[ext_resource type="Script" uid="uid://bu017uqxqo3fq" path="res://Scripts/Player/PlayerStates/jump.gd" id="5_pb3n0"]
 [ext_resource type="PackedScene" uid="uid://bp7cwrk7tmlbu" path="res://Assets/Models/right_arm.blend" id="6_ons1q"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oigcr"]
@@ -15,6 +15,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_pb3n0"]
 
 [node name="PlayerCharacter" type="CharacterBody3D"]
+collision_layer = 2
 script = ExtResource("1_qcwfp")
 inventory_data = ExtResource("2_ajo0r")
 

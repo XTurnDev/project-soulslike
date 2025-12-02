@@ -1,13 +1,21 @@
-[gd_scene load_steps=14 format=3 uid="uid://bah8wp4npraq6"]
+[gd_scene load_steps=27 format=3 uid="uid://bah8wp4npraq6"]
 
 [ext_resource type="Script" uid="uid://ehuvvhm1bjhc" path="res://Scenes/main.gd" id="1_kt01x"]
 [ext_resource type="Texture2D" uid="uid://dtrnl4bnvne8c" path="res://Assets/Textures/Debug/Grid/gray grid.png" id="1_skmq4"]
 [ext_resource type="PackedScene" uid="uid://ceklkriidetef" path="res://Scenes/player_character.tscn" id="2_au00k"]
 [ext_resource type="PackedScene" uid="uid://b2btdm8cq2xlq" path="res://Scenes/npc_base.tscn" id="3_707cn"]
+[ext_resource type="Script" uid="uid://mb2hj0to3dj7" path="res://Scripts/Inventory/InventoryDataEquip.gd" id="4_mde35"]
 [ext_resource type="PackedScene" uid="uid://bmkgif8bwh0x" path="res://Assets/Models/Environment/pine_tree.blend" id="4_mq1bj"]
 [ext_resource type="PackedScene" uid="uid://df7f2aqjf50n" path="res://Scripts/Inventory/inventory.tscn" id="5_iwv7r"]
 [ext_resource type="Script" uid="uid://bdxsy1ue1h7ok" path="res://Scripts/Inventory/inventory_interface.gd" id="6_p7j4p"]
 [ext_resource type="PackedScene" uid="uid://wef67j5gv5kw" path="res://Scripts/Inventory/slot.tscn" id="8_0fcji"]
+[ext_resource type="PackedScene" uid="uid://b27wdei4a0bbn" path="res://Objects/chest.tscn" id="9_dqfvb"]
+[ext_resource type="Script" uid="uid://dt077o02q38y8" path="res://Scripts/Inventory/InventoryData.gd" id="10_5qo1a"]
+[ext_resource type="Script" uid="uid://c2cqaodupuysi" path="res://Scripts/Inventory/SlotData.gd" id="11_bgy8c"]
+[ext_resource type="Resource" uid="uid://c82xu0mfsudwr" path="res://Items/apple.tres" id="12_dftws"]
+[ext_resource type="Resource" uid="uid://bpobbt4lq3xv7" path="res://Items/Weapons/short_sword.tres" id="13_h2i6u"]
+[ext_resource type="PackedScene" uid="uid://cq3vuh1t3v45b" path="res://Objects/pick_up.tscn" id="14_h2i6u"]
+[ext_resource type="PackedScene" uid="uid://jqfk05as1ufs" path="res://Scripts/Inventory/hot_bar_inventory.tscn" id="15_6sxhy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_au00k"]
 sky_horizon_color = Color(0.8579024, 0.8983153, 1.0034194, 1)
@@ -27,8 +35,34 @@ glow_enabled = true
 albedo_texture = ExtResource("1_skmq4")
 uv1_triplanar = true
 
+[sub_resource type="Resource" id="Resource_bv2ho"]
+script = ExtResource("4_mde35")
+slot_datas = Array[ExtResource("11_bgy8c")]([null])
+metadata/_custom_type_script = "uid://mb2hj0to3dj7"
+
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_okq71"]
 data = PackedVector3Array(-12.5, -0.05, 12.5, -12.5, -0.05, -12.5, -12.5, 0.05, -12.5, 12.5, -0.05, -12.5, -12.5, -0.05, -12.5, -12.5, -0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, -12.5, 12.5, -0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, 12.5, -12.5, -0.05, 12.5, -12.5, -0.05, 12.5, -12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, -12.5, 0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, 12.5, 12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, 12.5, 12.5, -0.05, 12.5, -12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, -0.05, 12.5, 12.5, 0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, -12.5, 12.5, 0.05, -12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, -12.5, 12.5, -0.05, -12.5)
+
+[sub_resource type="Resource" id="Resource_6sxhy"]
+script = ExtResource("11_bgy8c")
+item_data = ExtResource("12_dftws")
+quantity = 15
+metadata/_custom_type_script = "uid://c2cqaodupuysi"
+
+[sub_resource type="Resource" id="Resource_mde35"]
+script = ExtResource("11_bgy8c")
+item_data = ExtResource("13_h2i6u")
+metadata/_custom_type_script = "uid://c2cqaodupuysi"
+
+[sub_resource type="Resource" id="Resource_dftws"]
+script = ExtResource("10_5qo1a")
+slot_datas = Array[ExtResource("11_bgy8c")]([SubResource("Resource_6sxhy"), SubResource("Resource_mde35")])
+metadata/_custom_type_script = "uid://dt077o02q38y8"
+
+[sub_resource type="Resource" id="Resource_h2i6u"]
+script = ExtResource("11_bgy8c")
+item_data = ExtResource("13_h2i6u")
+metadata/_custom_type_script = "uid://c2cqaodupuysi"
 
 [node name="TestWorld" type="Node3D"]
 script = ExtResource("1_kt01x")
@@ -47,6 +81,7 @@ size = Vector3(25, 0.1, 25)
 material = SubResource("StandardMaterial3D_bi5fs")
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("2_au00k")]
+equip_inventory_data = SubResource("Resource_bv2ho")
 
 [node name="Collisions" type="StaticBody3D" parent="."]
 
@@ -59,9 +94,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -2)
 [node name="pine_tree" parent="." instance=ExtResource("4_mq1bj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1589851, 0.049999952, -6.4420204)
 
+[node name="Chest" parent="." instance=ExtResource("9_dqfvb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2706704, 0.049999714, 0.6788969)
+inventory_data = SubResource("Resource_dftws")
+
+[node name="PickUp" parent="." instance=ExtResource("14_h2i6u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2856171, -4.9755487)
+slot_data = SubResource("Resource_h2i6u")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="InventoryInterface" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -74,7 +118,36 @@ script = ExtResource("6_p7j4p")
 
 [node name="Inventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
 layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 138.0
+offset_bottom = 138.0
+
+[node name="EquipInventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
+layout_mode = 0
+offset_left = 841.0
+offset_top = 10.0
+offset_right = 969.0
+offset_bottom = 138.0
+
+[node name="ExternalInventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
+visible = false
+layout_mode = 0
+offset_left = -2.0
+offset_top = 412.0
+offset_right = 126.0
+offset_bottom = 540.0
 
 [node name="GrabbedSlot" parent="CanvasLayer/InventoryInterface" instance=ExtResource("8_0fcji")]
 visible = false
 layout_mode = 0
+
+[node name="HotBarInventory" parent="CanvasLayer" instance=ExtResource("15_6sxhy")]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 682.0
+offset_bottom = 154.0
+
+[connection signal="drop_slot_data" from="CanvasLayer/InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
+[connection signal="gui_input" from="CanvasLayer/InventoryInterface" to="CanvasLayer/InventoryInterface" method="_on_gui_input"]
+[connection signal="visibility_changed" from="CanvasLayer/InventoryInterface" to="CanvasLayer/InventoryInterface" method="_on_visibility_changed"]

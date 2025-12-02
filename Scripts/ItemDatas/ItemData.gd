@@ -9,4 +9,6 @@ const DEBUG_ICON = preload("uid://b5v67mplxqd7j")
 
 @export var stackable: bool = false
 @export var icon: Texture = DEBUG_ICON
-@export var item_type: String = ""
+
+func use(target) -> void:
+	pass

@@ -1,5 +1,5 @@
+extends EquipData
 class_name WeaponData
-extends ItemData
 
 @export_group("Visual")
 @export var mesh: PackedScene
