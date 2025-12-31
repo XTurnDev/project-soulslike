@@ -1,10 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://bah8wp4npraq6"]
+[gd_scene load_steps=25 format=3 uid="uid://bah8wp4npraq6"]
 
 [ext_resource type="Script" uid="uid://ehuvvhm1bjhc" path="res://Scenes/main.gd" id="1_kt01x"]
 [ext_resource type="Texture2D" uid="uid://dtrnl4bnvne8c" path="res://Assets/Textures/Debug/Grid/gray grid.png" id="1_skmq4"]
 [ext_resource type="PackedScene" uid="uid://ceklkriidetef" path="res://Scenes/player_character.tscn" id="2_au00k"]
 [ext_resource type="PackedScene" uid="uid://b2btdm8cq2xlq" path="res://Scenes/npc_base.tscn" id="3_707cn"]
-[ext_resource type="Script" uid="uid://mb2hj0to3dj7" path="res://Scripts/Inventory/InventoryDataEquip.gd" id="4_mde35"]
 [ext_resource type="PackedScene" uid="uid://bmkgif8bwh0x" path="res://Assets/Models/Environment/pine_tree.blend" id="4_mq1bj"]
 [ext_resource type="PackedScene" uid="uid://df7f2aqjf50n" path="res://Scripts/Inventory/inventory.tscn" id="5_iwv7r"]
 [ext_resource type="Script" uid="uid://bdxsy1ue1h7ok" path="res://Scripts/Inventory/inventory_interface.gd" id="6_p7j4p"]
@@ -34,11 +33,6 @@ glow_enabled = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bi5fs"]
 albedo_texture = ExtResource("1_skmq4")
 uv1_triplanar = true
-
-[sub_resource type="Resource" id="Resource_bv2ho"]
-script = ExtResource("4_mde35")
-slot_datas = Array[ExtResource("11_bgy8c")]([null])
-metadata/_custom_type_script = "uid://mb2hj0to3dj7"
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_okq71"]
 data = PackedVector3Array(-12.5, -0.05, 12.5, -12.5, -0.05, -12.5, -12.5, 0.05, -12.5, 12.5, -0.05, -12.5, -12.5, -0.05, -12.5, -12.5, -0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, -12.5, 12.5, -0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, 12.5, -12.5, -0.05, 12.5, -12.5, -0.05, 12.5, -12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, -12.5, 0.05, 12.5, -12.5, 0.05, -12.5, -12.5, -0.05, 12.5, 12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, 12.5, 12.5, -0.05, 12.5, -12.5, -0.05, 12.5, 12.5, -0.05, -12.5, 12.5, -0.05, 12.5, 12.5, 0.05, 12.5, 12.5, -0.05, -12.5, 12.5, 0.05, -12.5, -12.5, 0.05, -12.5, -12.5, 0.05, -12.5, 12.5, 0.05, -12.5, 12.5, 0.05, 12.5, 12.5, 0.05, 12.5, 12.5, 0.05, -12.5, 12.5, -0.05, -12.5)
@@ -81,7 +75,6 @@ size = Vector3(25, 0.1, 25)
 material = SubResource("StandardMaterial3D_bi5fs")
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("2_au00k")]
-equip_inventory_data = SubResource("Resource_bv2ho")
 
 [node name="Collisions" type="StaticBody3D" parent="."]
 
@@ -123,12 +116,26 @@ offset_top = 10.0
 offset_right = 138.0
 offset_bottom = 138.0
 
-[node name="EquipInventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
+[node name="RightHandInventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
 layout_mode = 0
 offset_left = 841.0
 offset_top = 10.0
 offset_right = 969.0
 offset_bottom = 138.0
+
+[node name="LeftHandInventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
+layout_mode = 0
+offset_left = 841.0
+offset_top = 150.0
+offset_right = 969.0
+offset_bottom = 278.0
+
+[node name="ArmorInventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
+layout_mode = 0
+offset_left = 841.0
+offset_top = 292.0
+offset_right = 969.0
+offset_bottom = 420.0
 
 [node name="ExternalInventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
 visible = false

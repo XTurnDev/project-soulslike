@@ -9,7 +9,9 @@ var external_inventory_owner
 @onready var inventory: PanelContainer = $Inventory
 @onready var grabbed_slot: PanelContainer = $GrabbedSlot
 @onready var external_inventory: PanelContainer = $ExternalInventory
-@onready var equip_inventory: PanelContainer = $EquipInventory
+@onready var right_hand_inventory: PanelContainer = $RightHandInventory
+@onready var left_hand_inventory: PanelContainer = $LeftHandInventory
+@onready var armor_inventory: PanelContainer = $ArmorInventory
 
 func _physics_process(_delta: float) -> void:
 	if grabbed_slot.visible:
@@ -23,9 +25,19 @@ func set_player_inventory_data(inventory_data: InventoryData) -> void:
 	inventory_data.inventory_interact.connect(on_inventory_interact)
 	inventory.set_inventory_data(inventory_data)
 
-func set_equip_inventory_data(inventory_data: InventoryData) -> void:
-	inventory_data.inventory_interact.connect(on_inventory_interact)
-	equip_inventory.set_inventory_data(inventory_data)
+func set_player_equip_data(right_hand: InventoryData, left_hand: InventoryData, armor: InventoryData) -> void:
+	
+	# Sağ El Bağlantısı
+	right_hand.inventory_interact.connect(on_inventory_interact)
+	right_hand_inventory.set_inventory_data(right_hand)
+	
+	# Sol El Bağlantısı
+	left_hand.inventory_interact.connect(on_inventory_interact)
+	left_hand_inventory.set_inventory_data(left_hand)
+	
+	# Zırh Bağlantısı
+	armor.inventory_interact.connect(on_inventory_interact)
+	armor_inventory.set_inventory_data(armor)
 
 func set_external_inventory(_external_inventory_owner) -> void:
 	external_inventory_owner = _external_inventory_owner

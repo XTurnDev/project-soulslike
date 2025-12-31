@@ -1,5 +1,4 @@
 extends State
-class_name PlayerIdle
 
 const DECELERATION_RATE = 25
 
@@ -14,6 +13,14 @@ func PhysicsUpdate(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("move_jump") and player.is_on_floor():
 		Transitioned.emit(self, "jump")
+	
+	if Input.is_action_just_pressed("action_light_attack"):
+		player.intended_attack_type = "light"
+		Transitioned.emit(self, "attack")
+		
+	if Input.is_action_just_pressed("action_heavy_attack"):
+		player.intended_attack_type = "heavy"
+		Transitioned.emit(self, "attack")
 	
 	if input_vector.length_squared() > 0.01:
 		Transitioned.emit(self, "movement")

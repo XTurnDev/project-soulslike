@@ -9,7 +9,12 @@ const PICK_UP = preload("uid://cq3vuh1t3v45b")
 func _ready() -> void:
 	player_character.toggle_menu.connect(toggle_inventory_interface)
 	inventory_interface.set_player_inventory_data(player_character.inventory_data)
-	inventory_interface.set_equip_inventory_data(player_character.equip_inventory_data)
+	
+	inventory_interface.set_player_equip_data(
+		player_character.right_hand_inventory_data,
+		player_character.left_hand_inventory_data,
+		player_character.armor_inventory_data)
+	
 	inventory_interface.force_close.connect(toggle_inventory_interface)
 	hot_bar_inventory.set_inventory_data(player_character.inventory_data)
 	
