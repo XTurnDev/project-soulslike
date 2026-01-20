@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bah8wp4npraq6"]
+[gd_scene load_steps=26 format=3 uid="uid://bah8wp4npraq6"]
 
 [ext_resource type="Script" uid="uid://ehuvvhm1bjhc" path="res://Scenes/main.gd" id="1_kt01x"]
 [ext_resource type="Texture2D" uid="uid://dtrnl4bnvne8c" path="res://Assets/Textures/Debug/Grid/gray grid.png" id="1_skmq4"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dt077o02q38y8" path="res://Scripts/Inventory/InventoryData.gd" id="10_5qo1a"]
 [ext_resource type="Script" uid="uid://c2cqaodupuysi" path="res://Scripts/Inventory/SlotData.gd" id="11_bgy8c"]
 [ext_resource type="Resource" uid="uid://c82xu0mfsudwr" path="res://Items/apple.tres" id="12_dftws"]
+[ext_resource type="Resource" uid="uid://ncv47c1dor0n" path="res://Items/Weapons/wood_axe.tres" id="12_mde35"]
 [ext_resource type="Resource" uid="uid://bpobbt4lq3xv7" path="res://Items/Weapons/short_sword.tres" id="13_h2i6u"]
 [ext_resource type="PackedScene" uid="uid://cq3vuh1t3v45b" path="res://Objects/pick_up.tscn" id="14_h2i6u"]
 [ext_resource type="PackedScene" uid="uid://jqfk05as1ufs" path="res://Scripts/Inventory/hot_bar_inventory.tscn" id="15_6sxhy"]
@@ -53,9 +54,10 @@ script = ExtResource("10_5qo1a")
 slot_datas = Array[ExtResource("11_bgy8c")]([SubResource("Resource_6sxhy"), SubResource("Resource_mde35")])
 metadata/_custom_type_script = "uid://dt077o02q38y8"
 
-[sub_resource type="Resource" id="Resource_h2i6u"]
+[sub_resource type="Resource" id="Resource_bv2ho"]
 script = ExtResource("11_bgy8c")
-item_data = ExtResource("13_h2i6u")
+item_data = ExtResource("12_dftws")
+quantity = 20
 metadata/_custom_type_script = "uid://c2cqaodupuysi"
 
 [node name="TestWorld" type="Node3D"]
@@ -83,6 +85,7 @@ shape = SubResource("ConcavePolygonShape3D_okq71")
 
 [node name="NpcBase" parent="." instance=ExtResource("3_707cn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -2)
+loot_item = ExtResource("12_mde35")
 
 [node name="pine_tree" parent="." instance=ExtResource("4_mq1bj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1589851, 0.049999952, -6.4420204)
@@ -93,11 +96,11 @@ inventory_data = SubResource("Resource_dftws")
 
 [node name="PickUp" parent="." instance=ExtResource("14_h2i6u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2856171, -4.9755487)
-slot_data = SubResource("Resource_h2i6u")
+slot_data = SubResource("Resource_bv2ho")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="InventoryInterface" type="Control" parent="CanvasLayer"]
+[node name="InventoryInterface" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("player")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -108,6 +111,7 @@ grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 script = ExtResource("6_p7j4p")
+player = NodePath("../../PlayerCharacter")
 
 [node name="Inventory" parent="CanvasLayer/InventoryInterface" instance=ExtResource("5_iwv7r")]
 layout_mode = 0

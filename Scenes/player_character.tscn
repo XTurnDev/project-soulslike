@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ceklkriidetef"]
+[gd_scene load_steps=17 format=3 uid="uid://ceklkriidetef"]
 
 [ext_resource type="Script" uid="uid://rwypgokq32i1" path="res://Scripts/Player/player_character.gd" id="1_qcwfp"]
 [ext_resource type="Resource" uid="uid://be0eco16rlgp1" path="res://Scripts/Inventory/test_inv.tres" id="2_ajo0r"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bu017uqxqo3fq" path="res://Scripts/Player/PlayerStates/jump.gd" id="5_pb3n0"]
 [ext_resource type="PackedScene" uid="uid://bp7cwrk7tmlbu" path="res://Assets/Models/right_arm.blend" id="6_ons1q"]
 [ext_resource type="Script" uid="uid://fbfeyt4braex" path="res://Scripts/Player/PlayerStates/attack.gd" id="7_flf3p"]
+[ext_resource type="Script" uid="uid://c14ee7jah5i1y" path="res://Scripts/Player/PlayerStates/dash.gd" id="11_4pbxa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oigcr"]
 
@@ -19,7 +20,10 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_pb3n0"]
 size = Vector3(1, 1, 2)
 
-[node name="PlayerCharacter" type="CharacterBody3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_4pbxa"]
+radius = 15.0
+
+[node name="PlayerCharacter" type="CharacterBody3D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_qcwfp")
 inventory_data = ExtResource("2_ajo0r")
@@ -28,6 +32,14 @@ left_hand_inventory_data = ExtResource("4_4pbxa")
 armor_inventory_data = ExtResource("5_ews8v")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_oigcr")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_oigcr")
 
@@ -49,14 +61,26 @@ script = ExtResource("3_o0f8b")
 [node name="Jump" type="Node" parent="StateMachine"]
 script = ExtResource("5_pb3n0")
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("weapon_hitbox", "right_arm", "attack_timer")]
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("weapon_hitbox", "right_arm", "attack_timer", "heavy_attack_charge")]
 script = ExtResource("7_flf3p")
 weapon_hitbox = NodePath("../../Head/Camera3D/Hitboxes/DefaultHitbox")
 right_arm = NodePath("../../Head/Camera3D/right_arm")
 attack_timer = NodePath("AttackTimer")
+heavy_attack_charge = NodePath("HeavyAttackCharge")
 
 [node name="AttackTimer" type="Timer" parent="StateMachine/Attack"]
 wait_time = 0.5
+one_shot = true
+
+[node name="HeavyAttackCharge" type="Timer" parent="StateMachine/Attack"]
+one_shot = true
+
+[node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("collision")]
+script = ExtResource("11_4pbxa")
+collision = NodePath("../../Hurtbox/Shape")
+
+[node name="DashTimer" type="Timer" parent="StateMachine/Dash"]
+wait_time = 0.2
 one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -80,6 +104,7 @@ offset_bottom = 23.0
 text = "State"
 
 [node name="Interactable" type="Label" parent="CanvasLayer/Hud"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -103,6 +128,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4943959, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5602074, 0.21764392)
 
 [node name="DefaultHitbox" type="Area3D" parent="Head/Camera3D/Hitboxes"]
+collision_layer = 0
+collision_mask = 512
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera3D/Hitboxes/DefaultHitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4275764, -1.6874707)
@@ -118,5 +145,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32603765, -2, 2.15912)
 [node name="WeaponHoldPoint" type="Node3D" parent="Head/Camera3D/right_arm"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4407693, 1.613349, -3.2809014)
 
+[node name="LockOnChamber" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LockOnChamber"]
+shape = SubResource("SphereShape3D_4pbxa")
+
 [connection signal="timeout" from="StateMachine/Attack/AttackTimer" to="StateMachine/Attack" method="_on_timer_timeout"]
-[connection signal="body_entered" from="Head/Camera3D/Hitboxes/DefaultHitbox" to="StateMachine/Attack" method="_on_default_hitbox_body_entered"]
+[connection signal="timeout" from="StateMachine/Attack/HeavyAttackCharge" to="StateMachine/Attack" method="on_charge_timer_timeout"]
+[connection signal="timeout" from="StateMachine/Dash/DashTimer" to="StateMachine/Dash" method="_on_dash_timer_timeout"]
+[connection signal="area_entered" from="Head/Camera3D/Hitboxes/DefaultHitbox" to="StateMachine/Attack" method="_on_default_hitbox_entered"]
+[connection signal="body_entered" from="LockOnChamber" to="." method="_on_lock_on_chamber_body_entered"]
+[connection signal="body_exited" from="LockOnChamber" to="." method="_on_lock_on_chamber_body_exited"]

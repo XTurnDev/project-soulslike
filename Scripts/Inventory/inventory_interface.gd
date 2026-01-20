@@ -6,6 +6,8 @@ signal force_close
 var grabbed_slot_data: SlotData
 var external_inventory_owner
 
+@export var player: CharacterBody3D
+
 @onready var inventory: PanelContainer = $Inventory
 @onready var grabbed_slot: PanelContainer = $GrabbedSlot
 @onready var external_inventory: PanelContainer = $ExternalInventory
@@ -47,6 +49,7 @@ func set_external_inventory(_external_inventory_owner) -> void:
 	external_inventory.set_inventory_data(inventory_data)
 	
 	external_inventory.show()
+	player.in_menu = true
 
 func clear_external_inventory() -> void:
 	if not external_inventory_owner:
@@ -57,6 +60,7 @@ func clear_external_inventory() -> void:
 	external_inventory.clear_inventory_data(inventory_data)
 	
 	external_inventory.hide()
+	player.in_menu = false
 	external_inventory_owner = null
 
 func on_inventory_interact(inventory_data: InventoryData, index: int, button: int) -> void:

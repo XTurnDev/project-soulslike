@@ -8,6 +8,8 @@ class_name WeaponData
 @export var weapon_type: String
 @export var damage: int
 @export var attack_speed: float
+@export var knockback: int
+@export var charge_time: float
 
 @export_group("Hitbox")
 @export var hitbox_size: Vector3 = Vector3(1, 1, 1) # Çarpışma kutusunun boyutu

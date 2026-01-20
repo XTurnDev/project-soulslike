@@ -1,31 +1,32 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2btdm8cq2xlq"]
+[gd_scene load_steps=18 format=3 uid="uid://b2btdm8cq2xlq"]
 
-[ext_resource type="Script" uid="uid://bdtxawsflf4ay" path="res://Scripts/Npc.gd" id="1_rcxfb"]
+[ext_resource type="Script" uid="uid://bdtxawsflf4ay" path="res://Scripts/NpcStates/Npc.gd" id="1_rcxfb"]
 [ext_resource type="PackedScene" uid="uid://jkjur15tnm6u" path="res://Assets/Models/Npc/base_npc.blend" id="2_pbdkk"]
-[ext_resource type="Script" uid="uid://bphvut8y2ckm8" path="res://Scripts/Player/NpcStates/NPCStateMachine.gd" id="3_j5tfy"]
-[ext_resource type="Script" uid="uid://6qnsgh6u1rj8" path="res://Scripts/Player/NpcStates/idle.gd" id="4_2kuio"]
-[ext_resource type="Script" uid="uid://dknqltj6wjhtv" path="res://Scripts/Player/NpcStates/hit.gd" id="5_j5tfy"]
+[ext_resource type="Script" uid="uid://bphvut8y2ckm8" path="res://Scripts/NpcStates/NPCStateMachine.gd" id="3_j5tfy"]
+[ext_resource type="Script" uid="uid://6qnsgh6u1rj8" path="res://Scripts/NpcStates/idle.gd" id="4_2kuio"]
+[ext_resource type="Script" uid="uid://dknqltj6wjhtv" path="res://Scripts/NpcStates/hit.gd" id="5_j5tfy"]
+[ext_resource type="Script" uid="uid://bv4b1w4rrp6xp" path="res://Scripts/NpcStates/death.gd" id="6_bpwc3"]
+[ext_resource type="PackedScene" uid="uid://cq3vuh1t3v45b" path="res://Objects/pick_up.tscn" id="7_cofpr"]
+[ext_resource type="FontFile" uid="uid://dieue75bdo68y" path="res://Assets/Fonts/Pixellari.ttf" id="8_7tvl7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pbdkk"]
 radius = 0.2
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_j5tfy"]
-viewport_path = NodePath("Sprite3D/SubViewport")
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7tvl7"]
 
-[sub_resource type="Animation" id="Animation_j5tfy"]
-resource_name = "get_hit_loop"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.96666664),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
-}
+[sub_resource type="ViewportTexture" id="ViewportTexture_j5tfy"]
+viewport_path = NodePath("2DVisuals/SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5tfy"]
+bg_color = Color(0.19607843, 0.19607843, 0.19607843, 0.8784314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpwc3"]
+bg_color = Color(0.8771882, 0.0014325877, 7.70092e-07, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7tvl7"]
+font = ExtResource("8_7tvl7")
+outline_size = 4
+outline_color = Color(0.27022192, 0.27022192, 0.2702219, 1)
 
 [sub_resource type="Animation" id="Animation_bpwc3"]
 length = 0.001
@@ -42,6 +43,22 @@ tracks/0/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_j5tfy"]
+resource_name = "get_hit_loop"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.19999999),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cofpr"]
 _data = {
 &"RESET": SubResource("Animation_bpwc3"),
@@ -55,6 +72,14 @@ script = ExtResource("1_rcxfb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_pbdkk")
 
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_7tvl7")
+
 [node name="Visuals" type="Node3D" parent="."]
 
 [node name="base_npc" parent="Visuals" instance=ExtResource("2_pbdkk")]
@@ -66,31 +91,76 @@ initial_state = NodePath("Idle")
 [node name="Idle" type="Node" parent="States"]
 script = ExtResource("4_2kuio")
 
-[node name="Hit" type="Node" parent="States"]
+[node name="Hit" type="Node" parent="States" node_paths=PackedStringArray("npc", "damage_text", "healthbar")]
 script = ExtResource("5_j5tfy")
+npc = NodePath("../..")
+damage_text = NodePath("../../2DVisuals/SubViewport/DamageVis")
+healthbar = NodePath("../../2DVisuals/SubViewport/HealthBar")
 
 [node name="Timer" type="Timer" parent="States/Hit"]
 wait_time = 0.3
 one_shot = true
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="PopUpTimer" type="Timer" parent="States/Hit"]
+one_shot = true
+
+[node name="Death" type="Node" parent="States"]
+script = ExtResource("6_bpwc3")
+pick_up_object = ExtResource("7_cofpr")
+
+[node name="Timer" type="Timer" parent="States/Death"]
+wait_time = 0.3
+one_shot = true
+
+[node name="2DVisuals" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 billboard = 1
 no_depth_test = true
+texture_filter = 0
 texture = SubResource("ViewportTexture_j5tfy")
 
-[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+[node name="SubViewport" type="SubViewport" parent="2DVisuals"]
 transparent_bg = true
-size = Vector2i(200, 27)
+canvas_item_default_texture_filter = 0
+size = Vector2i(200, 50)
+render_target_update_mode = 4
 
-[node name="HealthBar" type="ProgressBar" parent="Sprite3D/SubViewport"]
+[node name="HealthBar" type="ProgressBar" parent="2DVisuals/SubViewport"]
+offset_top = 25.0
 offset_right = 200.0
-offset_bottom = 27.0
+offset_bottom = 55.0
+theme_override_styles/background = SubResource("StyleBoxFlat_j5tfy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bpwc3")
+value = 50.0
+show_percentage = false
+
+[node name="NpcName" type="Label" parent="2DVisuals/SubViewport"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Name"
+label_settings = SubResource("LabelSettings_7tvl7")
+
+[node name="DamageVis" type="Label" parent="2DVisuals/SubViewport"]
+visible = false
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Damage"
+label_settings = SubResource("LabelSettings_7tvl7")
+horizontal_alignment = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_cofpr")
 }
 
-[connection signal="hurt" from="." to="States/Idle" method="_on_npc_base_hurt"]
 [connection signal="timeout" from="States/Hit/Timer" to="States/Hit" method="_on_timer_timeout"]
+[connection signal="timeout" from="States/Hit/PopUpTimer" to="States/Hit" method="_on_popup_timer_timeout"]
+[connection signal="timeout" from="States/Death/Timer" to="States/Death" method="_on_timer_timeout"]

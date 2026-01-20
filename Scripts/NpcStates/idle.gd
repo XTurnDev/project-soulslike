@@ -14,5 +14,3 @@ func PhysicsUpdate(_delta: float):
 	npc.velocity.x = move_toward(npc.velocity.x, 0, brake_force)
 	npc.velocity.z = move_toward(npc.velocity.z, 0, brake_force)
 
-func _on_npc_base_hurt() -> void:
-	Transitioned.emit(self, "hit")

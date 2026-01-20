@@ -33,9 +33,18 @@ func PhysicsUpdate(_delta: float):
 	else:
 		speed = WALK_SPEED
 	
+	if Input.is_action_just_pressed("action_dash"):
+		Transitioned.emit(self, "dash")
+	
+	if Input.is_action_just_pressed("action_light_attack"):
+		player.intended_attack_type = "light"
+		Transitioned.emit(self, "attack")
+		
+	if Input.is_action_just_pressed("action_heavy_attack"):
+		player.intended_attack_type = "heavy"
+		Transitioned.emit(self, "attack")
+	
 	if input_vector.length_squared() > 0.01:
-		
-		
 		var direction := (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if direction:
 			player.velocity.x = direction.x * speed
