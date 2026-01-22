@@ -7,13 +7,14 @@ class_name NpcBase
 @export var loot_item: ItemData 
 @export var loot_quantity: int = 1
 
+@export var hostile: bool
+@export var talkable: bool
+
 @onready var health_bar: ProgressBar = $"2DVisuals/SubViewport/HealthBar"
 @onready var name_label: Label = $"2DVisuals/SubViewport/NpcName"
 @export var friction: float = 10.0
 
 var current_state: State
-
-var dialogue_text = {}
 
 var is_shop: bool
 
@@ -22,6 +23,8 @@ var story_step: int = 0
 var health: int = 100
 
 var drop_slot_data: SlotData
+
+var dialogue_key: String = ""
 
 var damage_taken: float = 0
 var knockback_force: float
@@ -46,8 +49,9 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
-func Interact():
-	pass
+func interact():
+	if talkable:
+		SignalBus.emit_signal("display_dialog", dialogue_key)
 
 func Shop():
 	pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ceklkriidetef"]
+[gd_scene load_steps=20 format=3 uid="uid://ceklkriidetef"]
 
 [ext_resource type="Script" uid="uid://rwypgokq32i1" path="res://Scripts/Player/player_character.gd" id="1_qcwfp"]
 [ext_resource type="Resource" uid="uid://be0eco16rlgp1" path="res://Scripts/Inventory/test_inv.tres" id="2_ajo0r"]
@@ -12,10 +12,19 @@
 [ext_resource type="PackedScene" uid="uid://bp7cwrk7tmlbu" path="res://Assets/Models/right_arm.blend" id="6_ons1q"]
 [ext_resource type="Script" uid="uid://fbfeyt4braex" path="res://Scripts/Player/PlayerStates/attack.gd" id="7_flf3p"]
 [ext_resource type="Script" uid="uid://c14ee7jah5i1y" path="res://Scripts/Player/PlayerStates/dash.gd" id="11_4pbxa"]
+[ext_resource type="FontFile" uid="uid://dieue75bdo68y" path="res://Assets/Fonts/Pixellari.ttf" id="12_ews8v"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oigcr"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qcwfp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_12ptb"]
+font = ExtResource("12_ews8v")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_6m2el"]
+font = ExtResource("12_ews8v")
+font_size = 48
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pb3n0"]
 size = Vector3(1, 1, 2)
@@ -118,6 +127,61 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Press \"E\" to interact"
+
+[node name="DialogueInterface" type="Control" parent="CanvasLayer/Hud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DialogueBox" type="PanelContainer" parent="CanvasLayer/Hud/DialogueInterface"]
+custom_minimum_size = Vector2(1000, 200)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -225.0
+offset_right = 500.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+
+[node name="DialogueText" type="Label" parent="CanvasLayer/Hud/DialogueInterface/DialogueBox"]
+clip_contents = true
+custom_minimum_size = Vector2(900, 150)
+layout_mode = 2
+size_flags_vertical = 0
+text = "test text"
+label_settings = SubResource("LabelSettings_12ptb")
+autowrap_mode = 3
+
+[node name="NameTag" type="PanelContainer" parent="CanvasLayer/Hud/DialogueInterface"]
+clip_contents = true
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -499.0
+offset_top = 75.0
+offset_right = -382.0
+offset_bottom = 123.0
+
+[node name="NameText" type="Label" parent="CanvasLayer/Hud/DialogueInterface/NameTag"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Name"
+label_settings = SubResource("LabelSettings_6m2el")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4943959, 0)

@@ -83,6 +83,8 @@ func _unhandled_input(event):
 	
 	if Input.is_action_just_pressed("action_escape"):
 		in_menu = !in_menu
+		if raycast.get_collider():
+			raycast.get_collider().close()
 		toggle_menu.emit()
 	
 	if Input.is_action_just_pressed("action_lockon"):
