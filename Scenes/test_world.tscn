@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bah8wp4npraq6"]
+[gd_scene load_steps=31 format=3 uid="uid://bah8wp4npraq6"]
 
 [ext_resource type="Script" uid="uid://ehuvvhm1bjhc" path="res://Scenes/main.gd" id="1_kt01x"]
 [ext_resource type="Texture2D" uid="uid://dtrnl4bnvne8c" path="res://Assets/Textures/Debug/Grid/gray grid.png" id="1_skmq4"]
@@ -16,6 +16,9 @@
 [ext_resource type="Resource" uid="uid://bpobbt4lq3xv7" path="res://Items/Weapons/short_sword.tres" id="13_h2i6u"]
 [ext_resource type="PackedScene" uid="uid://cq3vuh1t3v45b" path="res://Objects/pick_up.tscn" id="14_h2i6u"]
 [ext_resource type="PackedScene" uid="uid://jqfk05as1ufs" path="res://Scripts/Inventory/hot_bar_inventory.tscn" id="15_6sxhy"]
+[ext_resource type="Script" uid="uid://ee04qxsc5fg7" path="res://Scripts/Singletons/SignalBus.gd" id="17_bv2ho"]
+[ext_resource type="FontFile" uid="uid://dieue75bdo68y" path="res://Assets/Fonts/Pixellari.ttf" id="17_byarb"]
+[ext_resource type="Script" uid="uid://6r40p8m8bdsd" path="res://Scripts/DialogPlayer.gd" id="17_eid5o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_au00k"]
 sky_horizon_color = Color(0.8579024, 0.8983153, 1.0034194, 1)
@@ -59,6 +62,14 @@ script = ExtResource("11_bgy8c")
 item_data = ExtResource("12_dftws")
 quantity = 20
 metadata/_custom_type_script = "uid://c2cqaodupuysi"
+
+[sub_resource type="LabelSettings" id="LabelSettings_eid5o"]
+font = ExtResource("17_byarb")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_nuiy5"]
+font = ExtResource("17_byarb")
+font_size = 48
 
 [node name="TestWorld" type="Node3D"]
 script = ExtResource("1_kt01x")
@@ -159,6 +170,68 @@ offset_top = 10.0
 offset_right = 682.0
 offset_bottom = 154.0
 
+[node name="DialogueInterface" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("17_eid5o")
+
+[node name="DialogueBox" type="PanelContainer" parent="CanvasLayer/DialogueInterface"]
+custom_minimum_size = Vector2(1000, 200)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -225.0
+offset_right = 500.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+
+[node name="DialogueText" type="Label" parent="CanvasLayer/DialogueInterface/DialogueBox"]
+clip_contents = true
+custom_minimum_size = Vector2(900, 150)
+layout_mode = 2
+size_flags_vertical = 0
+text = "test text"
+label_settings = SubResource("LabelSettings_eid5o")
+autowrap_mode = 3
+
+[node name="NameTag" type="PanelContainer" parent="CanvasLayer/DialogueInterface"]
+clip_contents = true
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -499.0
+offset_top = 75.0
+offset_right = -382.0
+offset_bottom = 123.0
+
+[node name="NameText" type="Label" parent="CanvasLayer/DialogueInterface/NameTag"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Name"
+label_settings = SubResource("LabelSettings_nuiy5")
+
+[node name="DialogueController" type="Node" parent="." node_paths=PackedStringArray("dialog_panel")]
+script = ExtResource("17_bv2ho")
+dialog_panel = NodePath("../CanvasLayer/DialogueInterface")
+
 [connection signal="drop_slot_data" from="CanvasLayer/InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
 [connection signal="gui_input" from="CanvasLayer/InventoryInterface" to="CanvasLayer/InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="CanvasLayer/InventoryInterface" to="CanvasLayer/InventoryInterface" method="_on_visibility_changed"]
+[connection signal="display_dialog" from="DialogueController" to="DialogueController" method="_on_signal_display"]

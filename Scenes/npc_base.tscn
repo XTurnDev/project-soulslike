@@ -1,13 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://b2btdm8cq2xlq"]
+[gd_scene load_steps=19 format=3 uid="uid://b2btdm8cq2xlq"]
 
-[ext_resource type="Script" uid="uid://bdtxawsflf4ay" path="res://Scripts/NpcStates/Npc.gd" id="1_rcxfb"]
+[ext_resource type="Script" uid="uid://bdtxawsflf4ay" path="res://Scripts/NPC/NpcStates/Npc.gd" id="1_rcxfb"]
 [ext_resource type="PackedScene" uid="uid://jkjur15tnm6u" path="res://Assets/Models/Npc/base_npc.blend" id="2_pbdkk"]
-[ext_resource type="Script" uid="uid://bphvut8y2ckm8" path="res://Scripts/NpcStates/NPCStateMachine.gd" id="3_j5tfy"]
-[ext_resource type="Script" uid="uid://6qnsgh6u1rj8" path="res://Scripts/NpcStates/idle.gd" id="4_2kuio"]
-[ext_resource type="Script" uid="uid://dknqltj6wjhtv" path="res://Scripts/NpcStates/hit.gd" id="5_j5tfy"]
-[ext_resource type="Script" uid="uid://bv4b1w4rrp6xp" path="res://Scripts/NpcStates/death.gd" id="6_bpwc3"]
+[ext_resource type="Script" uid="uid://bphvut8y2ckm8" path="res://Scripts/NPC/NpcStates/NPCStateMachine.gd" id="3_j5tfy"]
+[ext_resource type="Script" uid="uid://6qnsgh6u1rj8" path="res://Scripts/NPC/NpcStates/idle.gd" id="4_2kuio"]
+[ext_resource type="Script" uid="uid://dknqltj6wjhtv" path="res://Scripts/NPC/NpcStates/hit.gd" id="5_j5tfy"]
+[ext_resource type="Script" uid="uid://bv4b1w4rrp6xp" path="res://Scripts/NPC/NpcStates/death.gd" id="6_bpwc3"]
 [ext_resource type="PackedScene" uid="uid://cq3vuh1t3v45b" path="res://Objects/pick_up.tscn" id="7_cofpr"]
 [ext_resource type="FontFile" uid="uid://dieue75bdo68y" path="res://Assets/Fonts/Pixellari.ttf" id="8_7tvl7"]
+[ext_resource type="Script" uid="uid://d0vefq0q8rfv5" path="res://Scripts/NPC/DialogController.gd" id="9_xyb3v"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pbdkk"]
 radius = 0.2
@@ -160,6 +161,9 @@ horizontal_alignment = 2
 libraries = {
 &"": SubResource("AnimationLibrary_cofpr")
 }
+
+[node name="DialogController" type="Node" parent="."]
+script = ExtResource("9_xyb3v")
 
 [connection signal="timeout" from="States/Hit/Timer" to="States/Hit" method="_on_timer_timeout"]
 [connection signal="timeout" from="States/Hit/PopUpTimer" to="States/Hit" method="_on_popup_timer_timeout"]
