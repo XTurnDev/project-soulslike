@@ -11,18 +11,25 @@ var can_open: bool = true
 
 func interact() -> void:
 	if !can_open: return
-	toggle_menu.emit(self)
-	is_open = true
 	if is_open:
-		mesh.get_child(2).play("ArmatureAction")
-		timer.start(1.5)
-		can_open = false
+		close()
+	else:
+		open()
+
+func open() -> void:
+	toggle_menu.emit(self)
+	mesh.get_child(2).play("ArmatureAction")
+	timer.start(1.5)
+	can_open = false
+	is_open = true
 
 func _on_timer_timeout() -> void:
 	can_open = true
 
 func close() -> void:
-	if is_open:
-		mesh.get_child(2).play("ArmatureAction_002")
-		is_open = false
+	mesh.get_child(2).play("ArmatureAction_002")
+	timer.start(1.5)
+	can_open = false
+	is_open = false
+	toggle_menu.emit(self)
 

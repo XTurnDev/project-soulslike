@@ -1,14 +1,17 @@
 extends CharacterBody3D
 class_name NpcBase
 
-@export var npc_name: String = "NPC"
+@export var npc_data: NPCData
+
+var npc_name: String = "NPC"
 @onready var states: Node = $States
 
-@export var loot_item: ItemData 
-@export var loot_quantity: int = 1
+var loot_item: ItemData 
+var loot_quantity: int = 1
 
-@export var hostile: bool
-@export var talkable: bool
+var hostile: bool
+var talkable: bool
+var is_shop: bool
 
 @onready var health_bar: ProgressBar = $"2DVisuals/SubViewport/HealthBar"
 @onready var name_label: Label = $"2DVisuals/SubViewport/NpcName"
@@ -16,13 +19,11 @@ class_name NpcBase
 
 var current_state: State
 
-var is_shop: bool
-
 var story_step: int = 0
 
-var health: int = 100
+var health: float = 100
 
-var drop_slot_data: SlotData
+@onready var drop_slot_data: SlotData
 
 var dialogue_key: String = ""
 
@@ -31,6 +32,13 @@ var knockback_force: float
 var _player_pos: Vector3
 
 func _ready() -> void:
+	if npc_data:
+		npc_name = npc_data.name
+		health = npc_data.health
+		talkable = npc_data.talkable
+		hostile = npc_data.is_hostile
+		is_shop = npc_data.is_shop
+		loot_item = npc_data.drop_item
 	health_bar.max_value = health
 	health_bar.value = health
 	name_label.text = npc_name
